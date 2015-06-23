@@ -75,21 +75,22 @@
   (string-trim-right
    (shell-command-to-string (concat (coq-server-remote-cmd) " mktemp -d"))))
 
-(defvar coq-server-socket nil
+(defvar coq-server-socket-file nil
   "The location of the Coq server SSH control master socket, or nil if not connected yet.")
 
 (defun coq-server-local-mktempd ()
-  (shell-command-to-string "mktemp -d"))
+  (string-trim-right (shell-command-to-string "mktemp -d")))
 
 (defun coq-server-socket ()
   "Return the location of the SSH control master socket, or start a new control master."
-  (if coq-server-master-socket
-      coq-server-master-socket
-    (setq coq-server-socket (concat (coq-server-mktempd) "/coq-server.socket"))
+  (if coq-server-socket-file
+      coq-server-socket-file
+    (setq coq-server-socket-file (concat (coq-server-local-mktempd) "/coq-server.socket"))
     (async-shell-command
      (combine-and-quote-strings
-      (list "ssh" "-M " "-S " coq-server-socket "-l" coq-server-user coq-server-host)))
-    (sleep-for 0 100)))
+      (list "ssh" "-M" "-S" coq-server-socket-file "-l" coq-server-user coq-server-host)))
+    (sleep-for 0 100)
+    coq-server-socket-file))
 
 (defun coq-server-mount-self (path)
   "Mount the local host's whole file system on the remote server at PATH."
