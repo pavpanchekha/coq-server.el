@@ -88,7 +88,7 @@
     (setq coq-server-socket-file (concat (coq-server-local-mktempd) "/coq-server.socket"))
     (async-shell-command
      (combine-and-quote-strings
-      (list "ssh" "-M" "-S" coq-server-socket-file "-l" coq-server-user coq-server-host)))
+      (list "ssh" "-M" "-N" "-S" coq-server-socket-file "-l" coq-server-user coq-server-host)))
     (sleep-for 0 100)
     coq-server-socket-file))
 
@@ -131,7 +131,7 @@
           (when proof-shell-buffer
             (proof-shell-exit t))
           (message "Connecting to Coq server...")
-          (sleep-for 0 100)
+          (sleep-for 1)
           (find-file (concat (coq-server-remote-dir) tempd fname))
           (when old-modified-p
             (erase-buffer)
