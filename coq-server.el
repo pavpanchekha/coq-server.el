@@ -42,11 +42,11 @@
   :group 'coq-server :type 'string)
 
 (defcustom coq-server-local-sftp-server "/usr/libexec/openssh/sftp-server"
-  "The location of the sftp-server binary."
+  "The location of the sftp-server binary. It's usually under /usr, in some variant of /usr/lib, in a folder called openssh or ssh or similar."
   :group 'coq-server :type 'string)
 
 (defcustom coq-server-local-dpipe "/usr/bin/dpipe"
-  "The location of the dpipe binary."
+  "The location of the dpipe binary. It should come with this project, and can be built with `make'"
   :group 'coq-server :type 'string)
 
 (defcustom coq-server-program "coqtop"
