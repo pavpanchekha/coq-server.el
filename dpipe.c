@@ -5,16 +5,13 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-        int pid, c1, c2, found, j;
+        int pid, found, j;
         int pipes[2][2];
         char *argv2[argc];
 
         // Make some pipes
         pipe(pipes[0]);
         pipe(pipes[1]);
-
-        // Fork
-        pid = fork();
 
         found = 0;
         for (j = 1; j < argc; j++) {
@@ -32,18 +29,21 @@ int main(int argc, char *argv[]) {
                 exit(1);
         }
 
+        // Fork
+        pid = fork();
+
         // If we're parent process, hook pipes up to each other
         if (!pid) {
                 close(pipes[0][0]);
                 close(pipes[1][1]);
-                c1 = dup2(pipes[0][1], STDOUT_FILENO);
-                c2 = dup2(pipes[1][0], STDIN_FILENO);
+                if (dup2(pipes[0][1], STDOUT_FILENO) == -1) perror("First dup2 in parent");
+                if (dup2(pipes[1][0], STDIN_FILENO) == -1) perror("Second dup2 in parent");
                 execvp(argv[1], argv+1);
         } else {
                 close(pipes[0][1]);
                 close(pipes[1][0]);
-                c1 = dup2(pipes[1][1], STDOUT_FILENO);
-                c2 = dup2(pipes[0][0], STDIN_FILENO);
+                if (dup2(pipes[1][1], STDOUT_FILENO) == -1) perror("First dup2 in child");
+                if (dup2(pipes[0][0], STDIN_FILENO) == -1) perror("Second dup2 in child");
                 execvp(argv2[1], argv2+1);
         }
 }
