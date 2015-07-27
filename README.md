@@ -27,6 +27,6 @@ Be particularly careful to set the local dpipe variable to point to the `dpipe` 
 Using
 -----
 
-Now open up a Coq file and hit `C-x r`.
+Now open up a Coq file and hit `C-c r`.
 If everything goes well (and it might not),
 Coq should suddenly be much faster.
