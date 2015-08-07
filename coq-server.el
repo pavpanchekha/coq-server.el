@@ -143,7 +143,7 @@
                             ((and (listp path) (= (length path) 3))
                              (list (concat tempd "/" (car path)) (cadr path) (cadr (cdr path))))
                             ((and (listp path) (= (length path) 2))
-                             (list (concat tempd "/" (car path)) (concat tempd "/" (cadr path)))
+                             (list (concat tempd "/" (car path)) (cadr path)))
                             (t (error "Invalid entry in coq-load-path: %s" path))))
                          coq-load-path))
                 (new-coq-prog-name coq-server-program))
