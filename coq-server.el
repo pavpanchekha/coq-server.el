@@ -79,7 +79,7 @@
   "The location of the Coq server SSH control master socket, or nil if not connected yet.")
 
 (defun coq-server-local-mktempd ()
-  (string-trim-right (shell-command-to-string "mktemp -d")))
+  (string-trim-right (shell-command-to-string "mktemp -d /tmp/coq-server.XXXXXXXXXX")))
 
 (defun coq-server-socket ()
   "Return the location of the SSH control master socket, or start a new control master."
