@@ -102,7 +102,7 @@
            "ssh" "-l" (shell-quote-argument coq-server-user)
            "-S" (shell-quote-argument (coq-server-socket))
            (shell-quote-argument coq-server-host) "sshfs" ":/"
-           (shell-quote-argument path) "-o" "slave")))
+           (shell-quote-argument path) "-o" "slave" "-o" "transform_symlinks")))
     dpipe-buffer))
 
 (defun coq-server-unmount-self (path buffer)
