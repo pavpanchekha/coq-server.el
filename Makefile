@@ -1,4 +1,7 @@
 CFLAGS=-Werror -Wpedantic -Wall -std=c11 -g -O0
 
-dpipe: dpipe.c
-	$(CC) $(CFLAGS) $^ -o $@
+%: %.c
+	$(CC) $(CFLAGS) $^ -o $@ -D_DEFAULT_SOURCE
+
+clean:
+	rm dpipe chroot-into
