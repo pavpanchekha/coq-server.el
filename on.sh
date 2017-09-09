@@ -3,7 +3,7 @@
 set -e -o pipefail
 trap exit ERR
 
-ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+ABSOLUTE_PATH="$(cd "$(dirname $(readlink -f "${BASH_SOURCE[0]}"))" >/dev/null && pwd -P)"
 ( cd "$ABSOLUTE_PATH" && make dpipe chroot-into >/dev/null)
 
 if [ ! -z "$SFTP_SERVER" ]; then
